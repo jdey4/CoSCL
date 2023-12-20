@@ -83,6 +83,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
 
         # "Unify" and save
         for t in range(tasknum):
+            print('Saving task ', t)
             for s in ['train','test']:
                 data[t][s]['x']=torch.stack(data[t][s]['x']).view(-1,size[0],size[1],size[2])
                 data[t][s]['y']=torch.LongTensor(np.array(data[t][s]['y'],dtype=int)).view(-1)
