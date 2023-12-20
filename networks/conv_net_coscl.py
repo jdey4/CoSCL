@@ -271,6 +271,7 @@ class Net(nn.Module):
             self.Experts = []
             self.Experts_feature = []
 
+            print(x)
             h1 = self.net1(x)
             h1 = h1.view(x.shape[0], -1)
             # h1 = h1 * gfc1.expand_as(h1)
