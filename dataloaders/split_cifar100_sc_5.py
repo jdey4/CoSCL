@@ -94,7 +94,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
     # Load binary files
     data={}
     data[0] = dict.fromkeys(['name','ncla','train','test'])
-    ids=list(shuffle(np.arange(tasknum),random_state=seed)+1)
+    ids=list(range(1,11,1))
     print('Task order =',ids)
     for i in range(tasknum):
         data[i] = dict.fromkeys(['name','ncla','train','test'])
