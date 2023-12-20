@@ -36,7 +36,7 @@ class Net(nn.Module):
             #nn.Linear(1016, 2000),
             #nn.ReLU()
         )
-        
+        self.fc1 = nn.Linear(1016, 2000)
         self.fc2 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc2 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -278,6 +278,7 @@ class Net(nn.Module):
             h1 = h1.view(x.shape[0], -1)
             # h1 = h1 * gfc1.expand_as(h1)
             self.Experts_feature.append(h1)
+            h1 = self.relu(self.fc1(h1))
             h1 = self.relu(self.fc2(h1))
             h1 = self.drop2(h1)
             h1 = h1 * gfc1.expand_as(h1)
