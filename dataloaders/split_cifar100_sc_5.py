@@ -77,7 +77,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
                     data[task]['test']['x'].append(torch.tensor(data_x[indx[ii]]))
                     data[task]['test']['y'].append(torch.tensor(data_y[indx[ii]]))
 
-
+        print('shhshkhb')
         for s in ['train','test']:
             for task_idx in range(tasknum): #10 tasks
                 unique_label_t = np.unique(data[task_idx][s]['y'])
