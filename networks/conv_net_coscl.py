@@ -33,7 +33,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(130048*2, 2000),
+            nn.Linear(1016, 2000),
             nn.ReLU()
         )
         
