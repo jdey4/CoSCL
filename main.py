@@ -172,7 +172,7 @@ for t, ncla in taskcla:
 
     # Test
     for u in range(t + 1):
-        xtest = data[u]['test']['x'].cuda()
+        xtest = data[u]['test']['x'].float().cuda()
         ytest = data[u]['test']['y'].cuda()
 
         test_loss, test_acc = appr.eval(u, xtest, ytest)
