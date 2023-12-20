@@ -159,8 +159,8 @@ for t, ncla in taskcla:
     print('*' * 100)
 
     # Get data
-    xtrain = data[t]['train']['x'].cuda()
-    xvalid = data[t]['valid']['x'].cuda()
+    xtrain = data[t]['train']['x'].float().cuda()
+    xvalid = data[t]['valid']['x'].float().cuda()
 
     ytrain = data[t]['train']['y'].cuda()
     yvalid = data[t]['valid']['y'].cuda()
