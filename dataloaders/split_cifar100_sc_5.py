@@ -47,7 +47,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
             data[n]['test']={'x': [],'y': []}
 
 
-        (X_train, y_train), (X_test, y_test) = (dat['train'].data, dat['test'].data), \
+        (X_train, X_test), (y_train, y_test) = (dat['train'].data, dat['test'].data), \
                                 (dat['train'].targets, dat['test'].targets)
         data_x = np.concatenate([X_train, X_test])
         data_y = np.concatenate([y_train, y_test])
