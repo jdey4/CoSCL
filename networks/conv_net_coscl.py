@@ -32,7 +32,8 @@ class Net(nn.Module):
             nn.Conv2d(self.nc*8, 254, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(254),
             nn.ReLU(),
-            nn.Linear(130048, 2000),
+            nn.Flatten(),
+            nn.Linear(130048*2, 2000),
             nn.ReLU()
         )
         
