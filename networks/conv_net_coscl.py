@@ -32,9 +32,9 @@ class Net(nn.Module):
             nn.Conv2d(self.nc*8, 254, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(254),
             nn.ReLU(),
-            nn.Flatten(),
-            nn.Linear(1016, 2000),
-            nn.ReLU()
+            #nn.Flatten(),
+            #nn.Linear(1016, 2000),
+            #nn.ReLU()
         )
         
         self.fc2 = nn.Linear(2000, 2000)
@@ -273,7 +273,7 @@ class Net(nn.Module):
             self.Experts = []
             self.Experts_feature = []
 
-            print(x)
+            #print(x)
             h1 = self.net1(x)
             h1 = h1.view(x.shape[0], -1)
             # h1 = h1 * gfc1.expand_as(h1)
