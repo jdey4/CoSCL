@@ -52,6 +52,14 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
         data_x = np.concatenate([X_train, X_test])
         data_y = np.concatenate([y_train, y_test])
 
+
+        for ii in range(data_x.shape[0]):
+            tmp = dat['train'].transform(data_x[ii])
+            data_x[ii,:,:,0] = tmp[0,:,:]
+            data_x[ii,:,:,1] = tmp[1,:,:]
+            data_x[ii,:,:,2] = tmp[2,:,:]
+
+
         idx = [np.where(data_y == u)[0] for u in np.unique(data_y)]
 
         batch_per_task = 5000 // num_points_per_task
