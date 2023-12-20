@@ -62,12 +62,12 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
             for class_no in range(task * 10, (task + 1) * 10, 1):
                 indx = np.roll(idx[class_no], (shift - 1) * 100)
                 for ii in range(slot * sample_per_class, (slot + 1) * sample_per_class):
-                    data[task]['train']['x'].append(data_x[indx[ii]])
-                    data[task]['train']['y'].append(data_y[indx[ii]])
+                    data[task]['train']['x'].append(torch.tensor(data_x[indx[ii]]))
+                    data[task]['train']['y'].append(torch.tensor(data_y[indx[ii]]))
 
                 for ii in range(slot * test_data_slot+500, (slot + 1) * test_data_slot+500):
-                    data[task]['test']['x'].append(data_x[indx[ii]])
-                    data[task]['test']['y'].append(data_y[indx[ii]])
+                    data[task]['test']['x'].append(torch.tensor(data_x[indx[ii]]))
+                    data[task]['test']['y'].append(torch.tensor(data_y[indx[ii]]))
 
 
         for s in ['train','test']:
