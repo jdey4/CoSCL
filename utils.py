@@ -8,7 +8,7 @@ import math
 import torch
 import torch.nn as nn
 from tqdm import tqdm
-from torch._six import inf
+from torch import inf
 import pandas as pd
 from PIL import Image
 from sklearn.feature_extraction import image

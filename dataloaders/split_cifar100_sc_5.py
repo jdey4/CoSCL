@@ -1,15 +1,17 @@
+#%%
 import os,sys
 import numpy as np
 import torch
 import utils
 from torchvision import datasets,transforms
 from sklearn.utils import shuffle
-
-def get(seed=0,pc_valid=0.10, tasknum = 20):
+#%%
+def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
     data={}
     taskcla=[]
     size=[3,32,32]
-    tasknum = 20
+    num_points_per_task = 500
+    #tasknum = 20
 
     if not os.path.isdir('../dat/binary_split_cifar100_5_spcls/'):
         os.makedirs('../dat/binary_split_cifar100_5_spcls')
@@ -17,7 +19,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 20):
         mean = [0.5071, 0.4867, 0.4408]
         std = [0.2675, 0.2565, 0.2761]
 
-        superclass = np.array([ 4,  1, 14,  8,  0,  6,  7,  7, 18,  3,
+        '''superclass = np.array([ 4,  1, 14,  8,  0,  6,  7,  7, 18,  3,
                                3, 14,  9, 18,  7, 11,  3,  9,  7, 11,
                                6, 11,  5, 10,  7,  6, 13, 15,  3, 15,
                                0, 11,  1, 10, 12, 14, 16,  9, 11,  5,
@@ -26,8 +28,10 @@ def get(seed=0,pc_valid=0.10, tasknum = 20):
                                10, 3,  2, 12, 12, 16, 12,  1,  9, 19,
                                2, 10,  0,  1, 16, 12,  9, 13, 15, 13,
                               16, 19,  2,  4,  6, 19,  5,  5,  8, 19,
-                              18,  1,  2, 15,  6,  0, 17,  8, 14, 13])
+                              18,  1,  2, 15,  6,  0, 17,  8, 14, 13])'''
         
+        superclass = np.array([[i]*10 for i in range(10)]).reshape(-1)
+
         # CIFAR100
         dat={}
         
@@ -38,21 +42,36 @@ def get(seed=0,pc_valid=0.10, tasknum = 20):
         for n in range(tasknum):
             data[n]={}
             data[n]['name']='cifar100'
-            data[n]['ncla']= 5
+            data[n]['ncla']= 10
             data[n]['train']={'x': [],'y': []}
             data[n]['test']={'x': [],'y': []}
 
-        for s in ['train','test']:
-            loader=torch.utils.data.DataLoader(dat[s],batch_size=1,shuffle=False)
-            for image,target in loader:
-                task_idx = superclass[target]
-                #task_idx = target.numpy()[0] // 5     #num_task
-                #print("task_idx", task_idx)
-                data[task_idx][s]['x'].append(image)
-                data[task_idx][s]['y'].append(target.numpy()[0])
+
+        (X_train, y_train), (X_test, y_test) = (dat['train'].data, dat['test'].data), \
+                                (dat['train'].targets, dat['test'].targets)
+        data_x = np.concatenate([X_train, X_test])
+        data_y = np.concatenate([y_train, y_test])
+
+        idx = [np.where(data_y == u)[0] for u in np.unique(data_y)]
+
+        batch_per_task = 5000 // num_points_per_task
+        sample_per_class = num_points_per_task // data[n]['ncla']
+        test_data_slot = 100 // batch_per_task
+
+        for task in range(tasknum):
+            for class_no in range(task * 10, (task + 1) * 10, 1):
+                indx = np.roll(idx[class_no], (shift - 1) * 100)
+                for ii in range(slot * sample_per_class, (slot + 1) * sample_per_class):
+                    data[task]['train']['x'].append(data_x[indx[ii]])
+                    data[task]['train']['y'].append(data_y[indx[ii]])
+
+                for ii in range(slot * test_data_slot+500, (slot + 1) * test_data_slot+500):
+                    data[task]['test']['x'].append(data_x[indx[ii]])
+                    data[task]['test']['y'].append(data_y[indx[ii]])
+
 
         for s in ['train','test']:
-            for task_idx in range(tasknum): #20 tasks
+            for task_idx in range(tasknum): #10 tasks
                 unique_label_t = np.unique(data[task_idx][s]['y'])
                 #print("unique_label_t", unique_label_t)
                 for i in range(len(data[task_idx][s]['y'])):
