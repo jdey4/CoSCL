@@ -49,7 +49,7 @@ def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
 
         (X_train, X_test), (y_train, y_test) = (dat['train'].data, dat['test'].data), \
                                 (dat['train'].targets, dat['test'].targets)
-        data_x = np.concatenate([X_train, X_test])/255.0
+        data_x = np.concatenate([X_train, X_test], dtype=float)/255.0
         data_y = np.concatenate([y_train, y_test])
 
 
