@@ -58,8 +58,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc3 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc3 = nn.Linear(1016, 2000)
         self.fc4 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc4 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -81,8 +80,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc5 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc5 = nn.Linear(1016, 2000)
         self.fc6 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc6 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -104,8 +102,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc7 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc7 = nn.Linear(1016, 2000)
         self.fc8 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc8 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -128,8 +125,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc9 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc9 = nn.Linear(1016, 2000)
         self.fc10 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc10 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -152,8 +148,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc11 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc11 = nn.Linear(1016, 2000)
         self.fc12 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc12 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -175,8 +170,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc13 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc13 = nn.Linear(1016, 2000)
         self.fc14 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc14 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -199,8 +193,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc15 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc15 = nn.Linear(1016, 2000)
         self.fc16 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc16 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -223,8 +216,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc17 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc17 = nn.Linear(1016, 2000)
         self.fc18 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc18 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -247,8 +239,7 @@ class Net(nn.Module):
             nn.BatchNorm2d(254),
             nn.ReLU()
         )
-        self.fc19 = nn.Linear(1024, 2000)
-        nn.ReLU()
+        self.fc19 = nn.Linear(1016, 2000)
         self.fc20 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc20 = torch.nn.Embedding(len(self.taskcla), 2000)
@@ -288,6 +279,7 @@ class Net(nn.Module):
             h2 = h2.view(x.shape[0], -1)
             # h2 = h2 * gfc2.expand_as(h2)
             self.Experts_feature.append(h2)
+            h2 = self.relu(self.fc3(h2))
             h2 = self.relu(self.fc4(h2))
             h2 = self.drop2(h2)
             h2 = h2 * gfc2.expand_as(h2)
@@ -297,6 +289,7 @@ class Net(nn.Module):
             h3 = h3.view(x.shape[0], -1)
             # h3 = h3 * gfc3.expand_as(h3)
             self.Experts_feature.append(h3)
+            h3 = self.relu(self.fc5(h3))
             h3 = self.relu(self.fc6(h3))
             h3 = self.drop2(h3)
             h3 = h3 * gfc3.expand_as(h3)
@@ -306,6 +299,7 @@ class Net(nn.Module):
             h4 = h4.view(x.shape[0], -1)
             # h4 = h4 * gfc4.expand_as(h4)
             self.Experts_feature.append(h4)
+            h4 = self.relu(self.fc7(h4))
             h4 = self.relu(self.fc8(h4))
             h4 = self.drop2(h4)
             h4 = h4 * gfc4.expand_as(h4)
@@ -315,6 +309,7 @@ class Net(nn.Module):
             h5 = h5.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h5)
+            h5 = self.relu(self.fc9(h5))
             h5 = self.relu(self.fc10(h5))
             h5 = self.drop2(h5)
             h5 = h5 * gfc5.expand_as(h5)
@@ -324,6 +319,7 @@ class Net(nn.Module):
             h6 = h6.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h6)
+            h6 = self.relu(self.fc11(h6))
             h6 = self.relu(self.fc12(h6))
             h6 = self.drop2(h6)
             h6 = h6 * gfc6.expand_as(h6)
@@ -333,6 +329,7 @@ class Net(nn.Module):
             h7 = h7.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h7)
+            h7 = self.relu(self.fc13(h7))
             h7 = self.relu(self.fc14(h7))
             h7 = self.drop2(h7)
             h7 = h7 * gfc6.expand_as(h7)
@@ -342,6 +339,7 @@ class Net(nn.Module):
             h8 = h8.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h8)
+            h8 = self.relu(self.fc15(h8))
             h8 = self.relu(self.fc16(h8))
             h8 = self.drop2(h8)
             h8 = h8 * gfc6.expand_as(h8)
@@ -351,6 +349,7 @@ class Net(nn.Module):
             h9 = h9.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h9)
+            h9 = self.relu(self.fc17(h9))
             h9 = self.relu(self.fc18(h9))
             h9 = self.drop2(h9)
             h9 = h9 * gfc6.expand_as(h9)
@@ -360,6 +359,7 @@ class Net(nn.Module):
             h10 = h10.view(x.shape[0], -1)
             # h5 = h5 * gfc5.expand_as(h5)
             self.Experts_feature.append(h10)
+            h10 = self.relu(self.fc19(h10))
             h10 = self.relu(self.fc20(h10))
             h10 = self.drop2(h10)
             h10 = h10 * gfc6.expand_as(h10)
