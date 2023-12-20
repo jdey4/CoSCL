@@ -78,6 +78,7 @@ class Appr(object):
 
             num_batch = xtrain.size(0)
 
+            print(t,e)
             self.train_epoch(t,xtrain,ytrain, e)
 
             clock1=time.time()
