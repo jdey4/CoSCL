@@ -50,6 +50,8 @@ def get_args():
     parser.add_argument('--pdrop2',default=0.5,type=float,required=False,help='(default=%(default)f)')
 
     parser.add_argument('--warmup', default=60, type=int, required=False, help='warm up start epoch')
+    parser.add_argument('--slot', default=0, type=int, required=True, help='slot number')
+    parser.add_argument('--shift', default=1, type=int, required=True, help='shift number')
 
     args=parser.parse_args()
     return args

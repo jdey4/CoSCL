@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.init as init
 import torch.nn.functional as F
 import torch.optim as optim
-
+import pandas as pd
 import pickle
 import utils
 import torch
@@ -150,7 +150,17 @@ acc = np.zeros((len(taskcla), len(taskcla)), dtype=np.float32)
 lss = np.zeros((len(taskcla), len(taskcla)), dtype=np.float32)
 
 
+
+# JD portion
+df = pd.DataFrame()
+single_task_accuracies = np.zeros(10, dtype=float)
+shifts = []
+tasks = []
+base_tasks = []
+accuracies_across_tasks = []
+
 for t, ncla in taskcla:
+
     if t==1 and 'find_mu' in args.date:
         break
     
@@ -172,6 +182,10 @@ for t, ncla in taskcla:
 
     # Test
     for u in range(t + 1):
+        shifts.append(args.shift)
+        tasks.append(u+1)
+        base_tasks.append(t+1)
+
         xtest = data[u]['test']['x'].float().cuda()
         ytest = data[u]['test']['y'].cuda()
 
@@ -180,6 +194,9 @@ for t, ncla in taskcla:
 
         acc[t, u] = test_acc
         lss[t, u] = test_loss
+        accuracies_across_tasks.append(
+            test_acc
+        )
 
 
     # Save
@@ -187,7 +204,13 @@ for t, ncla in taskcla:
     print('Save at ' + args.output)
     np.savetxt(args.output, acc, '%.4f')
 
+df["data_fold"] = shifts
+df["task"] = tasks
+df["base_task"] = base_tasks
+df["accuracy"] = accuracies_across_tasks
 
+with open('CoSCL_'+str(args.shift)+'_'+str(args.slot), "wb") as f:
+        pickle.dump(df, f)
 # Done
 print('*' * 100)
 print('Accuracies =')
