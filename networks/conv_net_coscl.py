@@ -31,10 +31,11 @@ class Net(nn.Module):
             nn.ReLU(),
             nn.Conv2d(self.nc*8, 254, kernel_size=3, padding=1, stride=2),
             nn.BatchNorm2d(254),
+            nn.ReLU(),
+            nn.Linear(1016, 2000),
             nn.ReLU()
         )
-        self.fc1 = nn.Linear(1024, 2000) 
-        nn.ReLU()
+        
         self.fc2 = nn.Linear(2000, 2000)
         if self.use_TG:
             self.efc2 = torch.nn.Embedding(len(self.taskcla), 2000)
