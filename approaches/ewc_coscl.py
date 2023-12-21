@@ -132,7 +132,7 @@ class Appr(object):
             for n,_ in self.model.named_parameters():
                 fisher_old[n]=self.fisher[n].clone()
         self.fisher=utils.fisher_matrix_diag_coscl(t,xtrain,ytrain,self.model,self.criterion)
-        if t>0:
+        if t>10:
             # Watch out! We do not want to keep t models (or fisher diagonals) in memory, therefore we have to merge fisher diagonals
             for n,_ in self.model.named_parameters():
                 self.fisher[n]=self.fisher[n]+fisher_old[n]
