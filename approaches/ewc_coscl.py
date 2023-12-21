@@ -244,6 +244,6 @@ class Appr(object):
         loss_reg=0
         if t>0:
             for name, param in self.model.named_parameters():
-                loss_reg+=torch.sum(self.fisher[name]*(self.old_param[name] - param).pow(2))/2
+                loss_reg+=0#torch.sum(self.fisher[name]*(self.old_param[name] - param).pow(2))/2
         return self.ce(output,targets) + self.lamb * loss_reg
 
