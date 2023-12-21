@@ -194,9 +194,9 @@ df_single_task["task"] = range(1, 11)
 df_single_task["data_fold"] = args.shift
 df_single_task["accuracy"] = single_task_accuracies
 
-with open('CoSCL_'+str(args.shift)+'_'+str(args.slot), "rb") as f:
+with open('CoSCL_'+str(args.shift)+'_'+str(args.slot)+'.pickle', "rb") as f:
         df = pickle.load(f)
 
 summary = (df, df_single_task)
-with open('CoSCL_'+str(args.shift)+'_'+str(args.slot), "wb") as f:
+with open('CoSCL_'+str(args.shift)+'_'+str(args.slot)+'.pickle', "wb") as f:
         pickle.dump(summary, f)

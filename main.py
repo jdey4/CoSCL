@@ -209,7 +209,7 @@ df["task"] = tasks
 df["base_task"] = base_tasks
 df["accuracy"] = accuracies_across_tasks
 
-with open('CoSCL_'+str(args.shift)+'_'+str(args.slot), "wb") as f:
+with open('CoSCL_'+str(args.shift)+'_'+str(args.slot)+'.pickle', "wb") as f:
         pickle.dump(df, f)
 # Done
 print('*' * 100)
