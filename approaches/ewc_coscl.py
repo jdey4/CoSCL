@@ -127,7 +127,7 @@ class Appr(object):
             self.old_param[n] = p.data.clone().detach()
 
         # Fisher ops
-       ''' if t>0:
+        if t>10:
             fisher_old={}
             for n,_ in self.model.named_parameters():
                 fisher_old[n]=self.fisher[n].clone()
@@ -135,7 +135,7 @@ class Appr(object):
         if t>0:
             # Watch out! We do not want to keep t models (or fisher diagonals) in memory, therefore we have to merge fisher diagonals
             for n,_ in self.model.named_parameters():
-                self.fisher[n]=self.fisher[n]+fisher_old[n]'''
+                self.fisher[n]=self.fisher[n]+fisher_old[n]
 
         return
 
