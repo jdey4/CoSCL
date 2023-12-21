@@ -126,13 +126,13 @@ class Appr(object):
         for n, p in self.model.named_parameters():
             self.old_param[n] = p.data.clone().detach()
 
-        # Fisher ops
-        if t>10:
+        # Fisher ops (JD: change t > 0 for multitask experiment)
+        if t>0:
             fisher_old={}
             for n,_ in self.model.named_parameters():
                 fisher_old[n]=self.fisher[n].clone()
         self.fisher=utils.fisher_matrix_diag_coscl(t,xtrain,ytrain,self.model,self.criterion)
-        if t>10:
+        if t>0:
             # Watch out! We do not want to keep t models (or fisher diagonals) in memory, therefore we have to merge fisher diagonals
             for n,_ in self.model.named_parameters():
                 self.fisher[n]=self.fisher[n]+fisher_old[n]
@@ -240,10 +240,10 @@ class Appr(object):
         return total_loss/total_num, total_acc/total_num, total_hits_exp
 
     def criterion(self,t,output,targets):
-        # Regularization for all previous tasks
+        # Regularization for all previous tasks (JD: take the comment out for multitask experiment)
         loss_reg=0
         if t>0:
             for name, param in self.model.named_parameters():
-                loss_reg+=0#torch.sum(self.fisher[name]*(self.old_param[name] - param).pow(2))/2
+                loss_reg+=torch.sum(self.fisher[name]*(self.old_param[name] - param).pow(2))/2
         return self.ce(output,targets) + self.lamb * loss_reg
 
