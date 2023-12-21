@@ -186,7 +186,7 @@ for t, ncla in taskcla:
     ytest = data[t]['test']['y'].cuda()
 
     test_loss, test_acc = appr.eval(t, xtest, ytest)
-    print('>>> Test on task {:2d} - {:15s}: loss={:.3f}, acc={:5.1f}% <<<'.format(u, data[u]['name'], test_loss, 100 * test_acc))
+    print('>>> Test on task {:2d} - {:15s}: loss={:.3f}, acc={:5.1f}% <<<'.format(t, data[t]['name'], test_loss, 100 * test_acc))
 
     single_task_accuracies[t] = test_acc
 
