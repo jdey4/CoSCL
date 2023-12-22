@@ -6,7 +6,7 @@ import utils
 from torchvision import datasets,transforms
 from sklearn.utils import shuffle
 #%%
-def get(seed=0,pc_valid=0.10, tasknum = 10, slot=0, shift=1):
+def get(slot, shift, seed=0,pc_valid=0.10, tasknum = 10):
     data={}
     taskcla=[]
     size=[3,32,32]
