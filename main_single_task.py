@@ -110,6 +110,9 @@ if  args.experiment == 'split_cifar100_rs_5' or args.experiment == 'split_cifar1
 
 # Load
 print('Load data...')
+
+
+print('I am doing slot ', args.slot, ' shift ', args.shift)
 data, taskcla, inputsize = dataloader.get(seed=args.seed, tasknum=args.tasknum, slot=args.slot, shift=args.shift) # num_task is provided by dataloader
 print('\nInput size =', inputsize, '\nTask info =', taskcla)
 
