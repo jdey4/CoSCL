@@ -1,4 +1,4 @@
-for slot in {0..10..1}
+for slot in {1..10..1}
 do
     for shift in {1..6..1}
     do
